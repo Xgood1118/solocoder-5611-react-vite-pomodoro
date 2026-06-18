@@ -39,6 +39,7 @@ export function useTimer() {
 
   const handleWorkerMessage = useCallback((data) => {
     if (data.type === 'tick') {
+      if (useTimerStore.getState().status !== 'running') return
       setRemaining(data.remaining)
       document.title = `${formatTime(data.remaining)} - Pomodoro`
     } else if (data.type === 'complete') {
@@ -95,6 +96,7 @@ export function useTimer() {
           ? minutesToSeconds(longBreakDuration)
           : minutesToSeconds(shortBreakDuration)
         setRemaining(breakDuration)
+        document.title = `${formatTime(breakDuration)} - Pomodoro`
         useTimerStore.setState({ status: 'idle' })
       }
     } else {
@@ -105,8 +107,10 @@ export function useTimer() {
         setRemaining(workSec)
         postMessage({ type: 'start', duration: workSec })
       } else {
+        const workSec = minutesToSeconds(workDuration)
         startWork()
-        setRemaining(minutesToSeconds(workDuration))
+        setRemaining(workSec)
+        document.title = `${formatTime(workSec)} - Pomodoro`
         useTimerStore.setState({ status: 'idle' })
       }
     }
@@ -158,6 +162,11 @@ export function useTimer() {
     }
   }, [status, phase, pause, resume, start, getPhaseDuration])
 
+  const displaySeconds = (() => {
+    if (phase === 'idle') return minutesToSeconds(workDuration)
+    return remainingSeconds
+  })()
+
   const progress = (() => {
     if (phase === 'idle') return 0
     const total = getPhaseDuration(phase)
@@ -166,7 +175,7 @@ export function useTimer() {
   })()
 
   return {
-    phase, status, remainingSeconds, completedCycles,
+    phase, status, remainingSeconds, displaySeconds, completedCycles,
     totalPomodorosCompleted, progress,
     start, pause, resume, skip, reset, togglePause,
     getPhaseDuration

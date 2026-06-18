@@ -13,7 +13,7 @@ const PHASE_LABELS = {
 
 export default function Timer() {
   const {
-    phase, status, remainingSeconds, completedCycles, progress,
+    phase, status, displaySeconds, completedCycles, progress,
     start, pause, resume, skip, reset, togglePause
   } = useTimer()
 
@@ -55,7 +55,7 @@ export default function Timer() {
           />
         </svg>
         <div className="timer-display">
-          <span className="timer-time">{formatTime(remainingSeconds)}</span>
+          <span className="timer-time">{formatTime(displaySeconds)}</span>
         </div>
       </div>
 
