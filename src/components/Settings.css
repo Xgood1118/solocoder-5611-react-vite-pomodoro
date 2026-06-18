@@ -1,0 +1,53 @@
+.settings-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.settings-container h2 {
+  margin: 0 0 24px;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+}
+
+.settings-section {
+  margin-bottom: 28px;
+}
+
+.settings-section h3 {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.setting-toggle {
+  cursor: pointer;
+}
+
+.setting-toggle input[type="checkbox"] {
+  width: 40px;
+  height: 22px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.settings-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
